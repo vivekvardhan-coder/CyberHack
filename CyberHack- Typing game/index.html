@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="hacker.png" type="image/png">
+    <title>CyberHack: The Typing Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Username Modal -->
+<div class="modal" id="username-modal">
+    <div class="modal-content">
+        <h2>Enter Your Hacker Name</h2>
+        <input type="text" id="username-input" placeholder="e.g. CyberNinja" maxlength="20">
+        <button class="btn" id="start-game-btn">BEGIN MISSION</button>
+    </div>
+</div>
+
+    <div class="container">
+        <header>
+            <div class="logo">CYBER<span>HACK</span></div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="wpm">0</div>
+                    <div class="stat-label">WPM</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="accuracy">100%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="errors">0</div>
+                    <div class="stat-label">Errors</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="level">1</div>
+                    <div class="stat-label">Level</div>
+                </div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="game-screen">
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-btn"></div>
+                        <div class="terminal-btn"></div>
+                        <div class="terminal-btn"></div>
+                        <div class="terminal-title">cyberhack_terminal.exe</div>
+                    </div>
+                    
+                    <div class="mission-prompt" id="mission-prompt">
+                        // MISSION: Breach the firewall by typing the exact code sequence
+                    </div>
+                    
+                    <div class="text-container">
+                        <div class="text-display" id="text-display"></div>
+                        <input type="text" class="text-input" id="text-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                    </div>
+                    
+                    <div class="combo-meter">
+                        <div class="combo-fill" id="combo-fill"></div>
+                        <div class="combo-value" id="combo-value">x0</div>
+                    </div>
+                    
+                    <div class="feedback" id="feedback"></div>
+                    
+                    <div class="controls">
+                        <button class="btn" id="start-btn">START MISSION</button>
+                        <button class="btn" id="restart-btn" style="display: none;">RESTART</button>
+                        <button class="btn" id="settings-btn">SETTINGS</button>
+                        <button class="btn" id="leaderboard-btn">LEADERBOARD</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-over" id="game-over">
+                <h2>Mission Complete</h2>
+                
+                <div class="results">
+                    <div class="result-box">
+                        <div class="result-value" id="result-wpm">0</div>
+                        <div class="result-label">WPM</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-value" id="result-accuracy">0%</div>
+                        <div class="result-label">Accuracy</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-value" id="result-time">0s</div>
+                        <div class="result-label">Time</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-value" id="result-level">1</div>
+                        <div class="result-label">Level</div>
+                    </div>
+                </div>
+                
+                <h3>Progress Chart</h3>
+                <div class="progress-chart" id="progress-chart"></div>
+                
+                <div class="tip-box" id="tip-box">
+                    Pro Tip: Try to focus on accuracy first, speed will follow naturally!
+                </div>
+                
+                <div class="controls">
+                    <button class="btn" id="next-level-btn">NEXT LEVEL</button>
+                    <button class="btn" id="retry-btn">RETRY</button>
+                    <button class="btn" id="view-stats-btn">VIEW STATS</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Hacking Success Animation -->
+<div class="hack-success" id="hack-success">
+    <div class="hack-message" id="hack-message">ACCESS GRANTED</div>
+    <div class="hack-progress">
+        <div class="hack-progress-bar" id="hack-progress"></div>
+    </div>
+    <div class="code-stream" id="code-stream"></div>
+</div>
+    
+    <!-- Settings Modal -->
+    <div class="modal" id="settings-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-settings">&times;</button>
+            <h2>Settings</h2>
+            
+            <div class="select-container">
+                <div class="select-wrapper">
+                    <label for="difficulty">Difficulty:</label>
+                    <select id="difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard</option>
+                        <option value="expert">Expert</option>
+                    </select>
+                </div>
+                
+                <div class="select-wrapper">
+                    <label for="mode">Mode:</label>
+                    <select id="mode">
+                        <option value="words">Words</option>
+                        <option value="quotes" selected>Quotes</option>
+                        <option value="code">Code</option>
+                    </select>
+                </div>
+            </div>
+            
+            <p>Sound Effects: <input type="checkbox" id="sound-effects" checked></p>
+            <p>Visual Effects: <input type="checkbox" id="visual-effects" checked></p>
+            
+            <button class="btn" id="save-settings">Save Settings</button>
+        </div>
+    </div>
+    
+    <!-- Leaderboard Modal -->
+    <div class="modal" id="leaderboard-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-leaderboard">&times;</button>
+            <h2>Leaderboard</h2>
+            
+            <div class="select-wrapper">
+                <label for="leaderboard-filter">Filter by:</label>
+                <select id="leaderboard-filter">
+                    <option value="all">All Time</option>
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                </select>
+            </div>
+            
+            <table class="leaderboard">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>WPM</th>
+                        <th>Accuracy</th>
+                        <th>Level</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body">
+                    <!-- Leaderboard data will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
